@@ -26,8 +26,11 @@ export let validate = <T>(
   return result.data;
 };
 
-export let toJsonSchema = (schema: z.ZodType<any>) =>
+// `io: 'input'` describes what a caller may send: fields with a `.default()` are optional.
+// The default, 'output', lists them as required, which is right for outputs only.
+export let toJsonSchema = (schema: z.ZodType<any>, io: 'input' | 'output' = 'output') =>
   schema.toJSONSchema({
+    io,
     unrepresentable: 'any',
     override: ctx => {
       let def = ctx.zodSchema._zod.def;

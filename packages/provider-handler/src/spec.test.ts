@@ -79,6 +79,18 @@ describe('mapAction', () => {
     );
     expect(mapAction({} as any, toolAction)).not.toHaveProperty('toolCategoryIds');
   });
+
+  it('does not mark input fields with a default as required', () => {
+    let action = {
+      ...toolAction,
+      inputSchema: z.object({ length: z.number().default(32), name: z.string() }),
+      outputSchema: z.object({ length: z.number().default(32) })
+    };
+    let mapped = mapAction({} as any, action);
+
+    expect(mapped.inputSchema.required).toEqual(['name']);
+    expect(mapped.outputSchema.required).toEqual(['length']);
+  });
 });
 
 describe('mapToolCategory', () => {

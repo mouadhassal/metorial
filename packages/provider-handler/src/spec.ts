@@ -142,7 +142,7 @@ export let mapAction = <ConfigType extends {}, AuthType extends {}>(
     docs: a.docs ?? [],
     ...(a.adapter ? { adapter: a.adapter } : {}),
 
-    inputSchema: toJsonSchema(a.inputSchema),
+    inputSchema: toJsonSchema(a.inputSchema, 'input'),
     outputSchema: toJsonSchema(a.outputSchema)
   };
 
